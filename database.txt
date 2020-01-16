@@ -1,0 +1,55 @@
+Hvordan databasen vår skal se ut:
+
+observation:
+	id (primary key)
+	turbine_id (foreign key turbine)
+	time
+	speed
+	temperature
+	windDirection
+	windSpeed
+	windGust
+	humidity
+	pressure
+	cloudiness
+	fog
+	lowClouds
+	mediumClouds
+	highClouds
+	dewpointTemperature
+
+turbine:
+	id (primary key)
+	name
+	latitude
+	longitude
+
+##################################
+Med datatyper: (basicly SQL-syntax)
+
+observation:
+	id int,
+	turbine_id int,
+	time timestamp,
+	speed float,
+	temperature float,
+	windDirection float,
+	windSpeed float,
+	windGust float,
+	humidity float,
+	pressure float,
+	cloudiness float,
+	fog float,
+	lowClouds float,
+	mediumClouds float,
+	highClouds float,
+	dewpointTemperature float,
+	PRIMARY KEY (id),
+	FOREIGN KEY (turbine_id) REFERENCES turbine(id)
+
+turbine:
+	id int,
+	name varchar(255),
+	latitude float,
+	longitude float,
+	PRIMARY KEY (id)

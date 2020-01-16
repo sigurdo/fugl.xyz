@@ -3,6 +3,7 @@
 if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
 	header('Location: '."https://folk.ntnu.no/sigurdht/fugl.xyz/test1.php");
 }
+
 if ($_POST) {
 
 }
