@@ -1,10 +1,13 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+	echo "Her er det ingenting å finne med GET<br>";
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	/*Required format for data:
 	{
 		db_username: username,
 		db_password: password,
-		tubine_id: id,
+		turbine_id: id,
 		time: "YYYY-MM-DD hh:mm:ss", (optional)
 		speed: speed
 	}
@@ -13,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$db_username = $_POST['db_username'];
 	$db_password = $_POST['db_password'];
 	$turbine_id = $_POST['turbine_id'];
-	$time = $_POST['time'] ? $_POST['time'] : date("Y-m-d h:i:s");
+	$time = $_POST['time'] ? $_POST['time'] : date("Y-m-d H:i:s");
 	$speed = $_POST['speed'];
 	$table = $_POST['table'];
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Live data fugl.xyz </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
+	<style type="text/css">
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+	</style>
+</head>
+<body>
+	<table id="data"></table>
+
+	<button id="showAll"> Vis alle </button>
+
+	<a href="../api/register/test.html"> Manuell observasjon </a>
+
+	<script type="text/javascript">
+		let showAll = false;
+		$('#showAll').on('click', () => {
+			showAll = !showAll;
+			$('#showAll').html(showAll ? 'Vis siste 24h' : 'Vis alle');
+			fetch();
+		});
+		function fetch() {
+			$.get('../api/observations/', (data, status) => {
+				let observations = JSON.parse(data);
+				observations.sort((a, b) => b.id - a.id);
+				if (!showAll) observations = _.filter(observations, obs => new Date().getTime() - new Date(obs.time).getTime() < 86400000);
+				let html = '<tr>';
+				for (let key in observations[0]) {
+					html += `<th> ${key} </th>`;
+				}
+				html += '</tr>';
+				for (let i = 0; i < observations.length; i++) {
+					html += '<tr>';
+					for (let key in observations[i]) {
+						html += `<td> ${observations[i][key]} </td>`;
+					}
+					html += '</tr>';
+				}
+				$('#data').html(html);
+			});
+		}
+
+		fetch();
+		setInterval(fetch, 1000);
+	</script>
+</body>
+</html>

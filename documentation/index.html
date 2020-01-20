@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> fugl.xyz - Dokumentasjon </title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
+	<h2> API dokumentasjon </h2>
+	<h3> POST /api/register </h3>
+
+	POST /api/register apiet brukes til å registrere en ny observasjon i databasen. Vi viser hvordan det brukes med et eksempel i python:
+
+<pre>
+	<code class="language-python">
+import requests #pip install requests
+
+url = "http://folk.ntnu.no/sigurdht/fugl.xyz/api/register/"
+data = {
+	"db_username": "pi",
+	"db_password": "password",
+	"turbine_id": 1,
+	#"time": "2020-01-20 15:08:55", #hvis du vil spesifisere tidspunkt selv
+	"speed": 2.6
+}
+r = requests.post(url, data, allow_redirects=False)
+
+print("response:", r.text)
+#Output skal se omtrent sånn her ut hvis alt funker:
+#response: sql: INSERT INTO observation (turbine_id, time, speed) VALUES (1, '2020-01-20 03:04:32', 2.6) <<!---->br>username: pi<<!---->br>password: password<<!---->br>Spørringen gikk vellykket<<!---->br>
+
+	</code>
+</pre>
+	Jeg synes personlig denne koden er ganske selvforklarende, så jeg har ikke tenkt å kommentere den ytterligere. Men for å sjekke at registreringen funker kan du se på <a href="../live"> live data </a>, som er en tabell over alle observasjoner siste 24h.
+
+	<h3> GET /api/observations </h3>
+	Returnerer en JSON-liste over alle observasjonene i databasen. Dette API-et blir brukt i <a href="../live"> live data </a>.
+</body>
+</html>
