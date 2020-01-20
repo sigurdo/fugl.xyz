@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teste /api/register </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+	<form method="POST" action="./index.php">
+		<p> db_username: <input type="text" name="db_username" id="db_username"> </p>
+		<p> db_password: <input type="text" name="db_password" id="db_password"> </p>
+		<p>	turbine_id:	<input type="text" name="turbine_id" value="1">	</p>
+		<p>	time: <input type="text" name="time" value="0"> </p>
+		<p>	speed: <input type="text" name="speed" value="2.2">	</p>
+		<input type="submit" name="send" value="send" id="send">
+	</form>
+
+	<script type="text/javascript">//Husker på innlogginsdataen som ble skrevet sist
+		if (localStorage.getItem('db_username')) $('#db_username').val(localStorage.getItem('db_username'));
+		if (localStorage.getItem('db_password')) $('#db_password').val(localStorage.getItem('db_password'));
+
+		$('#send').on('click', () => {
+			localStorage.setItem('db_username', $('#db_username').val());
+			localStorage.setItem('db_password', $('#db_password').val());
+		});
+	</script>
+</body>
+</html>
