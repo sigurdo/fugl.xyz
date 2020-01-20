@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$turbine_id = $_POST['turbine_id'];
 	$time = $_POST['time'] ? $_POST['time'] : date("Y-m-d H:i:s");
 	$speed = $_POST['speed'];
-	$table = $_POST['table'];
 
 	$sql = "INSERT INTO observation (turbine_id, time, speed) VALUES ($turbine_id, '$time', $speed)";
 	echo "sql: $sql <br>";
