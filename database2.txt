@@ -9,6 +9,8 @@ observation:
 	turbine_id (foreign key turbine)
 	time
 	speed
+	temperature
+	humidity
 
 turbine:
 	id (primary key)
@@ -34,8 +36,10 @@ CREATE TABLE observation(
 	turbine_id int,
 	time timestamp,
 	speed float,
+	temperature float,
+	humidity float,
 	PRIMARY KEY (id),
 	FOREIGN KEY (turbine_id) REFERENCES turbine(id)
 );
 
-INSERT INTO observation (turbine_id, time, speed) VALUES (1, '2020-01-20 12:04:01', 2.3);
+INSERT INTO observation (turbine_id, time, speed, temperature, humidity) VALUES (1, '2020-01-20 12:04:01', 2.3, 12.3, 42);

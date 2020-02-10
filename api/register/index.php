@@ -17,9 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$db_password = $_POST['db_password'];
 	$turbine_id = $_POST['turbine_id'];
 	$time = $_POST['time'] ? $_POST['time'] : date("Y-m-d H:i:s");
-	$speed = $_POST['speed'];
+	$speed = $_POST['speed'] ? $_POST['speed'] : "NULL";
+	$temperature = $_POST['temperature'] ? $_POST['temperature'] : "NULL";
+	$humidity = $_POST['humidity'] ? $_POST['humidity'] : "NULL";
 
-	$sql = "INSERT INTO observation (turbine_id, time, speed) VALUES ($turbine_id, '$time', $speed)";
+	$sql = "INSERT INTO observation (turbine_id, time, speed, temperature, humidity) VALUES ($turbine_id, '$time', $speed, $temperature, $humidity)";
 	echo "sql: $sql <br>";
 	echo "username: $db_username<br>";
 	echo "password: $db_password<br>";
