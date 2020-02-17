@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title> Statistikk fugl.xyz </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .vannrett {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        #graf {
+            max-width: 150vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="vannrett">
+        <canvas id="graf"></canvas>
+    </div>
+
+    <select id="grafFormat">
+        <option value="0"> Obs/turbin </option>
+        <option value="1"> Obs/time </option>
+    </select>
+
+    <script type="text/javascript">
+        class BirdDataGraph {
+            constructor(ctx, data) {
+                this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour'];
+                this.currentFormatNr = 0;
+                this.ctx = ctx;
+                this.data = data;
+                this.type = 'bar';
+                this.labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+                this.datasets = [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }];
+                this.chart = new Chart(this.ctx, {
+                    type: this.type,
+                    data: {
+                        labels: this.labels,
+                        datasets: this.datasets
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        animation: false
+                    }
+                });
+                // this.render();
+            }
+            render() {
+                this.chart.data.labels = this.labels;
+                this.chart.data.datasets = this.datasets;
+                this.chart.update();
+            }
+            setData(data) {
+                this.data = data;
+            }
+            show(formatNr) {
+                if (formatNr !== undefined) this.currentFormatNr = formatNr;
+                this[this.graphFormatFuncs[this.currentFormatNr]]();
+            }
+            showBirdsPerTurbine() {
+                let label = 'Antall obsevasjoner pr vindmølle';
+                let turbine_ids = [1, 2, 3, 4];
+                let turbine_obs = [0, 0, 0, 0];
+                let turbineColors = ['red', 'blue', 'yellow', 'green'];
+                for (let i = 0; i < this.data.length; i++) {
+                    for (let j = 0; j < turbine_ids.length; j++) {
+                        if (this.data[i].turbine_id == turbine_ids[j]) turbine_obs[j]++;
+                    }
+                }
+                this.datasets = [{
+                    label,
+                    data: turbine_obs,
+                    borderWidth: 1,
+                    backgroundColor: 'green'//turbineColors
+                }];
+                this.labels = turbine_ids;
+                this.render();
+            }
+            showBirdsPerHour() {
+                let label = 'Antall observasjoner pr tidpunkt på døgnet';
+                let hours = [];
+                let hoursLabel = [];
+                let hoursColor = [];
+                for (let i = 0; i < 24; i++) {
+                    hours.push(0);
+                    hoursLabel.push(i);
+                    hoursColor.push('crimson')
+                }
+                this.labels = hoursLabel;
+                for (let i = 0; i < this.data.length; i++) {
+                    hours[new Date(this.data[i].time).getHours()]++;
+                    //console.log(new Date(this.data[i].time));
+                }
+                this.datasets = [{
+                    label,
+                    barPercentage: 1,
+                    categoryPercentage: 1,
+                    data: hours,
+                    backgroundColor: hoursColor
+                }];
+                this.render();
+            }
+        }
+
+        let allData = [];
+        let keys = [];
+        for (let key in allData[0]) keys.push(key);
+        let ctx = document.querySelector('#graf').getContext('2d');
+        let chart = new BirdDataGraph(ctx, []);
+        chart.showBirdsPerTurbine();
+    </script>
+
+    <script type="text/javascript">
+        function fetch() {
+            $.get('../api/observations/', (data, status) => {
+                let observations = JSON.parse(data);
+                observations.sort((a, b) => b.id - a.id);
+                chart.setData(observations);
+                chart.show();
+            });
+        }
+
+        fetch();
+
+        function applyGrafFormat(newVal) {
+            if (newVal !== undefined) localStorage.setItem('currentGrafFormat', newVal);
+            let value = localStorage.getItem('currentGrafFormat');
+            $('#grafFormat').val(value);
+            chart.show(value);
+        }
+
+        if (localStorage.getItem('currentGrafFormat') == undefined) {
+            localStorage.setItem('currentGrafFormat', 0);
+        }
+
+        applyGrafFormat();
+
+        $('#grafFormat').on('input', ev => {
+            let value = Number(ev.target.value);
+            applyGrafFormat(value);
+        });
+    </script>
+</body>
+</html>
