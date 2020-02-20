@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="inputModule.css">
     <style type="text/css">
         html, body {
             margin: 0px;
@@ -35,18 +36,14 @@
         <canvas id="graf"></canvas>
     </div>
 
-    <div class="vannrett">
-        <select id="grafFormat" style="font-size: 24px;">
-            <option value="0"> Obs/turbin </option>
-            <option value="1"> Obs/time </option>
-        </select>
-    </div>
+    <div id="inputModul"></div>
 
     <div class="vannrett" style="margin-top: 24px;">
         <iframe id="map" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBcDP4kr8xeUYvYPwOWOkxMNwE50pa3LLk&q=63.417901,10.402329" width="600" height="450" frameborder="0" style="border:0; display: none;" allowfullscreen=""></iframe>
     </div>
 
     <script type="text/javascript" src="BirdDataGraph.js"></script>
+    <script type="text/javascript" src="InputModule.js"></script>
 
     <script type="text/javascript">
         const api_base_url = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBcDP4kr8xeUYvYPwOWOkxMNwE50pa3LLk';
@@ -56,6 +53,7 @@
         let ctx = document.querySelector('#graf').getContext('2d');
         let chart = new BirdDataGraph(ctx, [], []);
         chart.showBirdsPerTurbine();
+        let inputModule = new InputModule('inputModul', chart);
     </script>
 
     <script type="text/javascript">
@@ -77,35 +75,12 @@
 
         fetch();
 
-        function applyGrafFormat(newVal) {
-            if (newVal !== undefined) localStorage.setItem('currentGrafFormat', newVal);
-            let value = localStorage.getItem('currentGrafFormat');
-            $('#grafFormat').val(value);
-            chart.show(value);
-        }
-
-        if (localStorage.getItem('currentGrafFormat') == undefined) {
-            localStorage.setItem('currentGrafFormat', 0);
-        }
-
-        applyGrafFormat();
-
-        $('#grafFormat').on('input', ev => {
-            let value = Number(ev.target.value);
-            applyGrafFormat(value);
-            if (value != 0) hideMap();
-        });
-
         function renderMap(lat, long) {
             if (lat != undefined && long != undefined)
                 $('#map').attr('src', `${api_base_url}&q=${lat},${long}&maptype=satellite`);
             $('#map').attr('width', window.innerWidth);
             $('#map').attr('height', window.innerHeight);
             $('#map').show();
-        }
-
-        function hideMap() {
-            $('#map').hide();
         }
 
         chart.chart.options.onClick = (e, data) => {

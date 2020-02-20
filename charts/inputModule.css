@@ -1,0 +1,14 @@
+#inputModul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#inputModul>#grafFormat>select {
+    font-size: 24px;
+}
+
+#inputModul>#extraFields {
+    display: block;
+    font-size: 24px;
+}

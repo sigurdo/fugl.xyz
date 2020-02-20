@@ -1,6 +1,6 @@
 class BirdDataGraph {
     constructor(ctx, data, turbineData) {
-        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour'];
+        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour', 'showBirdsPerSpeed'];
         this.currentFormatNr = 0;
         this.ctx = ctx;
         this.data = data;
@@ -110,5 +110,34 @@ class BirdDataGraph {
             backgroundColor: hoursColor
         }];
         this.render();
+    }
+    showBirdsPerSpeed() {
+        let label = 'Antall observasjoner for ulik fart';
+        let speeds = [];
+        let speedsLabel = [];
+        let speedsColor = [];
+        let resolution = this.birdsPerSpeedResolution ? this.birdsPerSpeedResolution : 0.2;
+        let maxSpeed = Number(_.max(this.data, el => Number(el.speed)).speed);
+        for (let i = 0; i < maxSpeed/resolution; i++) {
+            speeds.push(0);
+            speedsLabel.push((i*resolution).toFixed(1));
+            speedsColor.push('#abcdef');
+        }
+        this.labels = speedsLabel;
+        for (let i = 0; i < this.data.length; i++) {
+            speeds[Math.floor(this.data[i].speed/resolution)]++;
+            //console.log(new Date(this.data[i].time));
+        }
+        this.datasets = [{
+            label,
+            barPercentage: 1,
+            categoryPercentage: 1,
+            data: speeds,
+            backgroundColor: speedsColor
+        }];
+        this.render();
+    }
+    setBirdsPerSpeedResolution(resolution) {
+        this.birdsPerSpeedResolution = resolution;
     }
 }
