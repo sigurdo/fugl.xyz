@@ -2,10 +2,26 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
 	<title>Teste /api/register </title>
+	<link rel="stylesheet" href="../../style_fugl.css">
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+<div class="pagetitle">
+	Manuell observasjon
+	<i class="fas fa-crow"></i>
+</div>
+	<div class="row">
+	<div class="column nav">
+		<a href="../../"><i class="fas fa-home"></i> Hjem </a>
+		<a href="../../live/"><i class="fas fa-table"></i> Live data </a>
+		<a href="../../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="../../charts/"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="../../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</div>
+	<div class="column content">
 	<form method="POST" action="./index.php">
 		<p> db_username: <input type="text" name="db_username" id="db_username"> </p>
 		<p> db_password: <input type="text" name="db_password" id="db_password"> </p>
@@ -26,5 +42,10 @@
 			localStorage.setItem('db_password', $('#db_password').val());
 		});
 	</script>
+	</div>
+</div>
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
 </body>
 </html>

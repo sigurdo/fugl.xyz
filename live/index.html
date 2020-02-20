@@ -5,21 +5,27 @@
 	<title> Live data fugl.xyz </title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-
-	<style type="text/css">
-		table, th, td {
-			border: 1px solid black;
-			border-collapse: collapse;
-		}
-	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+	<link rel="stylesheet" href="../style_fugl.css"></link>
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
+	
 </head>
 <body>
+<div class="pagetitle">
+Oversikt over vindmoller
+</div>
+<div class="row">
+	<div class="column nav">
+		<a href="../"><i class="fas fa-home"></i> Hjem </a>
+		<a href="../live/"><i class="fas fa-table"></i> Live data </a>
+		<a href="../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="../charts/"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</div>
+	<div class="column content">
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+	<button class="button" id="showAll"> Vis alle </button>
 	<table id="data"></table>
-
-	<button id="showAll"> Vis alle </button>
-
-	<a href="../api/register/test.html"> Manuell observasjon </a>
-
 	<script type="text/javascript">
 		let showAll = false;
 		$('#showAll').on('click', () => {
@@ -51,5 +57,10 @@
 		fetch();
 		setInterval(fetch, 1000);
 	</script>
+	</div>
+</div>
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
 </body>
 </html>
