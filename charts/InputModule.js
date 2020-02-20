@@ -14,7 +14,7 @@ const graphFormats = [{
     }, {
         name: 'Farge',
         type: 'text',
-        defaultValue: 'pink',
+        defaultValue: 'white',
         onInput: (chart, newVal) => {
             console.log(newVal);
             $('body').css('background-color', newVal);
