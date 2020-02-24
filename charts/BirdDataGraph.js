@@ -131,14 +131,14 @@ class BirdDataGraph {
     }
     showMonth() {
         let months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'];
-        let label = `Viser observasjoner for ${this.month.month} ${this.month.year}`;
-        let date = new Date(this.month.year, months.indexOf(this.month.month));
+        let label = `Viser observasjoner for ${months[this.month.month]} ${this.month.year}`;
+        let date = new Date(this.month.year, this.month.month);
         let obsPerDay = [];
         let tempPerDay = [];
         let humidityPerDay = [];
         let days = [];
         let colors = [];
-        for (let i = 0; date.getTime() < new Date(this.month.year, months.indexOf(this.month.month)+1).getTime(); i++) {
+        for (let i = 0; date.getTime() < new Date(this.month.year, this.month.month+1).getTime(); i++) {
             let obs = _.filter(this.data, el => {
                 return new Date(el.time).toLocaleDateString() == date.toLocaleDateString();
             });
@@ -158,7 +158,6 @@ class BirdDataGraph {
             data: obsPerDay,
             backgroundColor: colors
         }];
-        console.log(tempPerDay, this.month.temp);
         if (this.month.temp) this.datasets.push({
             label: 'Temperatur[°C]',
             data: tempPerDay,

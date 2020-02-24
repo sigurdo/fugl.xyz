@@ -67,20 +67,26 @@
     </script>
 
     <script type="text/javascript">
-        function fetch() {
-            $.get('../api/observations/', (data, status) => {
+        async function fetch() {
+            let promises = [];
+            promises[0] = new Promise((resolve, reject) => $.get('../api/observations/', (data, status) => {
                 let observations = JSON.parse(data);
                 observations.sort((a, b) => b.id - a.id);
                 chart.setData(observations);
-                chart.show();
-            });
-
-            $.get('../api/turbines/', (data, status) => {
+                inputModule.setData(observations);
+                resolve();
+            }));
+            promises[1] = new Promise((resolve, reject) => $.get('../api/turbines/', (data, status) => {
                 let turbines = JSON.parse(data);
                 turbines.sort((a, b) => a.id - b.id);
                 chart.setTurbineData(turbines);
-                chart.show();
-            });
+                inputModule.setTurbineData(turbines);
+                resolve();
+            }));
+
+            await Promise.all(promises);
+            chart.show();
+            inputModule.render();
         }
 
         fetch();

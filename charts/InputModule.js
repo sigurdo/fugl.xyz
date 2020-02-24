@@ -49,26 +49,30 @@ const graphFormats = [{
         }
     }, {
         name: 'År',
-        type: 'number',
+        type: 'select',
         defaultValue: 2020,
         onInput: (chart, newVal) => {
-            newVal = Number(newVal);
-            chart.month.year = newVal;
+            chart.month.year = Number(newVal);
+        },
+        generateOptions: (chart, data, turbineData) => {
+            return [{value: 2020, name: 2020}];
         }
     }, {
         name: 'Måned',
-        type: 'text',
-        defaultValue: 'Februar',
+        type: 'select',
+        defaultValue: 1,
         onInput: (chart, newVal) => {
-            //newVal = Number(newVal);
-            chart.month.month = newVal;
+            chart.month.month = Number(newVal);
+        },
+        generateOptions: (chart, data, turbineData) => {
+            // IKKE HELT FERDIG HER
+            return [{value: 0, name: 'Januar'}, {value: 1, name: 'Februar'}];
         }
     }, {
         name: 'Vis temperatur',
         type: 'checkbox',
         defaultValue: true,
         onInput: (chart, newVal) => {
-            console.log(newVal);
             chart.month.temp = newVal;
         }
     }, {
@@ -88,18 +92,9 @@ class InputModule {
         //this.jq = $(this.selector);
         this.chart = chart;
         this.formats = graphFormats;
-
-        let html = '<div id="grafFormat"> Modus: <select>';
-        for (let i = 0; i < this.formats.length; i++) {
-            html += `<option value="${i}"> ${this.formats[i].name} </option>`;
-        }
-        html += '</select></div> <div id="extraFields"></div>';
-        $(this.selector).html(html);
-
         if (localStorage.getItem('currentGrafFormat') == undefined) {
             localStorage.setItem('currentGrafFormat', 0);
         }
-        this.applyGrafFormat();
         for (let i = 0; i < this.formats.length; i++) {
             if (!this.formats[i].extraFields) continue;
             for (let j = 0; j < this.formats[i].extraFields.length; j++) {
@@ -112,7 +107,21 @@ class InputModule {
                 opt.onInput(this.chart, opt.type == 'checkbox' ? JSON.parse(val) : val);
             }
         }
-
+    }
+    setData(data) {
+        this.data = data;
+    }
+    setTurbineData(data) {
+        this.turbineData = data;
+    }
+    render() {
+        let html = '<div id="grafFormat"> Modus: <select>';
+        for (let i = 0; i < this.formats.length; i++) {
+            html += `<option value="${i}"> ${this.formats[i].name} </option>`;
+        }
+        html += '</select></div> <div id="extraFields"></div>';
+        $(this.selector).html(html);
+        this.applyGrafFormat();
         this.getjq('#grafFormat>select').on('input', ev => {
             let value = Number(ev.target.value);
             this.applyGrafFormat(value);
@@ -128,7 +137,19 @@ class InputModule {
         let html = '<table>';
         for (let j = 0; j < this.formats[i].extraFields.length; j++) {
             let opt = this.formats[i].extraFields[j];
-            html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td> <input type="${opt.type}" id="${j}"></td><td> <button id="default-${j}"> Default </button></tr>`
+            html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td>`;
+            if (opt.type == 'text' || opt.type == 'number' || opt.type == 'checkbox') {
+                html += `<input type="${opt.type}" id="${j}">`;
+            }
+            else if (opt.type == 'select') {
+                html += `<select id="${j}">`;
+                let options = opt.generateOptions(this.chart, this.data, this.turbineData);
+                for (let k = 0; k < options.length; k++) {
+                    html += `<option value="${options[k].value}"> ${options[k].name} </option>`;
+                }
+                html += `</select>`;
+            }
+            html += `</td><td> <button id="default-${j}"> Default </button></tr>`;
         }
         html += '</table>';
         this.getjq('#extraFields').html(html);
