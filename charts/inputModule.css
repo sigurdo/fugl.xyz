@@ -1,14 +1,18 @@
 #inputModul {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    font-size: 18px;
 }
-
-#inputModul>#grafFormat>select {
-    font-size: 24px;
+#inputModul>#grafFormat {
+    margin: 24px;
 }
 
 #inputModul>#extraFields {
     display: block;
-    font-size: 24px;
+    margin: 24px;
+}
+
+select, input, button {
+    font-size: 18px;
 }

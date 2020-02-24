@@ -1,33 +1,13 @@
 class BirdDataGraph {
     constructor(ctx, data, turbineData) {
-        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour', 'showBirdsPerSpeed'];
+        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour', 'showBirdsPerSpeed', 'showMonth'];
         this.currentFormatNr = 0;
         this.ctx = ctx;
         this.data = data;
         this.turbineData = turbineData;
         this.type = 'bar';
         this.labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-        this.datasets = [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }];
+        this.datasets = [];
         this.chart = new Chart(this.ctx, {
             type: this.type,
             data: {
@@ -45,7 +25,8 @@ class BirdDataGraph {
                 animation: false
             }
         });
-        // this.render();
+        this.month = {};
+        // this.render
     }
     render() {
         this.chart.data.labels = this.labels;
@@ -82,7 +63,7 @@ class BirdDataGraph {
             label,
             data: turbine_obs,
             borderWidth: 1,
-            backgroundColor: 'green'//turbineColors
+            backgroundColor: turbineColors
         }];
         this.labels = turbineNames;
         this.render();
@@ -92,14 +73,19 @@ class BirdDataGraph {
         let hours = [];
         let hoursLabel = [];
         let hoursColor = [];
-        for (let i = 0; i < 24; i++) {
+        let resolution = this.birdsPerHourResolution;
+        if (!resolution) return console.log('Ugyldig oppløsning:', resolution);
+        let color = this.birdsPerHourColor;
+        for (let i = 0; i < 24/resolution; i++) {
             hours.push(0);
-            hoursLabel.push(i);
-            hoursColor.push('crimson')
+            hoursLabel.push((i*resolution).toFixed(1));
+            hoursColor.push(color);
         }
         this.labels = hoursLabel;
         for (let i = 0; i < this.data.length; i++) {
-            hours[new Date(this.data[i].time).getHours()]++;
+            let date = new Date(this.data[i].time);
+            let hour = date.getHours() + date.getMinutes()/60 + date.getSeconds()/3600;
+            hours[Math.floor(hour/resolution)]++;
             //console.log(new Date(this.data[i].time));
         }
         this.datasets = [{
@@ -116,12 +102,15 @@ class BirdDataGraph {
         let speeds = [];
         let speedsLabel = [];
         let speedsColor = [];
-        let resolution = this.birdsPerSpeedResolution ? this.birdsPerSpeedResolution : 0.2;
+        let resolution = this.birdsPerSpeedResolution;
+        if (!resolution) return console.log('Ugyldig oppløsning:', resolution);
+        let color = this.birdsPerSpeedColor;// ? this.birdsPerSpeedColor : '#000';
         let maxSpeed = Number(_.max(this.data, el => Number(el.speed)).speed);
         for (let i = 0; i < maxSpeed/resolution; i++) {
+            console.log(maxSpeed/resolution);
             speeds.push(0);
             speedsLabel.push((i*resolution).toFixed(1));
-            speedsColor.push('#abcdef');
+            speedsColor.push(color);
         }
         this.labels = speedsLabel;
         for (let i = 0; i < this.data.length; i++) {
@@ -139,5 +128,49 @@ class BirdDataGraph {
     }
     setBirdsPerSpeedResolution(resolution) {
         this.birdsPerSpeedResolution = resolution;
+    }
+    showMonth() {
+        let months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'];
+        let label = `Viser observasjoner for ${this.month.month} ${this.month.year}`;
+        let date = new Date(this.month.year, months.indexOf(this.month.month));
+        let obsPerDay = [];
+        let tempPerDay = [];
+        let humidityPerDay = [];
+        let days = [];
+        let colors = [];
+        for (let i = 0; date.getTime() < new Date(this.month.year, months.indexOf(this.month.month)+1).getTime(); i++) {
+            let obs = _.filter(this.data, el => {
+                return new Date(el.time).toLocaleDateString() == date.toLocaleDateString();
+            });
+            obsPerDay.push(obs.length);
+            console.log('obs:', obs, i);
+            tempPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
+                this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
+            humidityPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 
+                this.data.reduce((a, b) => a + Number(b.humidity), 0)/this.data.length);
+            days.push(i+1);
+            colors.push(this.month.color);
+            date = new Date(date.getTime()+24*3600*1000);
+        }
+        this.labels = days;
+        this.datasets = [{
+            label,
+            data: obsPerDay,
+            backgroundColor: colors
+        }];
+        console.log(tempPerDay, this.month.temp);
+        if (this.month.temp) this.datasets.push({
+            label: 'Temperatur[°C]',
+            data: tempPerDay,
+            borderColor: 'orange',
+            type: 'line'
+        });
+        if (this.month.humidity) this.datasets.push({
+            label: 'Luftfiktighet[%]',
+            data: humidityPerDay,
+            borderColor: 'blue',
+            type: 'line'
+        });
+        this.render();
     }
 }

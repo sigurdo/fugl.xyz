@@ -1,23 +1,82 @@
 const graphFormats = [{
-    name: 'Obs/turbin'
+    name: 'Observasjoner/turbin'
 }, {
-    name: 'Obs/time'
-}, {
-    name: 'Obs/fart',
+    name: 'Observasjoner/time',
     extraFields: [{
+        name: 'Farge',
+        type: 'text',
+        defaultValue: 'crimson',
+        onInput: (chart, newVal) => {
+            chart.birdsPerHourColor = newVal;
+        }
+    }, {
         name: 'Oppløsning',
         type: 'number',
         defaultValue: 1,
         onInput: (chart, newVal) => {
-            chart.setBirdsPerSpeedResolution(Number(newVal));
+            newVal = Number(newVal);
+            if (!newVal) return;// newVal = graphFormats[1].extraFields[0].defaultValue;
+            chart.birdsPerHourResolution = newVal;
         }
-    }, {
+    }]
+}, {
+    name: 'Observasjoner/fart',
+    extraFields: [{
         name: 'Farge',
         type: 'text',
-        defaultValue: 'white',
+        defaultValue: '#abcdef',
+        onInput: (chart, newVal) => {
+            chart.birdsPerSpeedColor = newVal;
+        }
+    }, {
+        name: 'Oppløsning',
+        type: 'number',
+        defaultValue: 0.2,
+        onInput: (chart, newVal) => {
+            newVal = Number(newVal);
+            if (!newVal) return;// newVal = graphFormats[2].extraFields[1].defaultValue;
+            chart.setBirdsPerSpeedResolution(newVal);
+        }
+    }]
+}, {
+    name: 'Måned',
+    extraFields: [{
+        name: 'Farge',
+        type: 'text',
+        defaultValue: 'purple',
+        onInput: (chart, newVal) => {
+            chart.month.color = newVal;
+        }
+    }, {
+        name: 'År',
+        type: 'number',
+        defaultValue: 2020,
+        onInput: (chart, newVal) => {
+            newVal = Number(newVal);
+            chart.month.year = newVal;
+        }
+    }, {
+        name: 'Måned',
+        type: 'text',
+        defaultValue: 'Februar',
+        onInput: (chart, newVal) => {
+            //newVal = Number(newVal);
+            chart.month.month = newVal;
+        }
+    }, {
+        name: 'Vis temperatur',
+        type: 'checkbox',
+        defaultValue: true,
         onInput: (chart, newVal) => {
             console.log(newVal);
-            $('body').css('background-color', newVal);
+            chart.month.temp = newVal;
+        }
+    }, {
+        name: 'Vis fuktighet',
+        type: 'checkbox',
+        defaultValue: true,
+        onInput: (chart, newVal) => {
+            chart.month.humidity = newVal;
         }
     }]
 }];
@@ -30,7 +89,7 @@ class InputModule {
         this.chart = chart;
         this.formats = graphFormats;
 
-        let html = '<div id="grafFormat"><select>';
+        let html = '<div id="grafFormat"> Modus: <select>';
         for (let i = 0; i < this.formats.length; i++) {
             html += `<option value="${i}"> ${this.formats[i].name} </option>`;
         }
@@ -50,7 +109,7 @@ class InputModule {
                     localStorage.setItem(`currentExtraFields-${i}-${j}`, opt.defaultValue);
                     val = opt.defaultValue;
                 }
-                opt.onInput(this.chart, val);
+                opt.onInput(this.chart, opt.type == 'checkbox' ? JSON.parse(val) : val);
             }
         }
 
@@ -66,24 +125,30 @@ class InputModule {
             return;
         }
         let i = formatNr;
-        let html = '';
+        let html = '<table>';
         for (let j = 0; j < this.formats[i].extraFields.length; j++) {
             let opt = this.formats[i].extraFields[j];
-            if (opt.type == 'number') {
-                html += `<div>${opt.name}: <input type="number" id="${j}"></div>`
-            }
-            if (opt.type == 'text') {
-                html += `<div>${opt.name}: <input type="text" id="${j}"></div>`
-            }
+            html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td> <input type="${opt.type}" id="${j}"></td><td> <button id="default-${j}"> Default </button></tr>`
         }
+        html += '</table>';
         this.getjq('#extraFields').html(html);
         for (let j = 0; j < this.formats[i].extraFields.length; j++) {
             let opt = this.formats[i].extraFields[j];
-            let el = this.getjq(`#extraFields>div>#${j}`);
+            let el = this.getjq(`#extraFields>table>tbody>tr>td>#${j}`);
             el.val(localStorage.getItem(`currentExtraFields-${i}-${j}`));
+            if (el.attr('type') == 'checkbox') el.prop('checked', JSON.parse(localStorage.getItem(`currentExtraFields-${i}-${j}`)));
             el.on('input', ev => {
+                if (ev.target.type == 'checkbox') ev.target.value = ev.target.checked;
                 localStorage.setItem(`currentExtraFields-${i}-${j}`, ev.target.value);
-                opt.onInput(this.chart, ev.target.value);
+                opt.onInput(this.chart, el.attr('type') == 'checkbox' ? JSON.parse(ev.target.value) : ev.target.value);
+                chart.show();
+            });
+            let el2 = this.getjq(`#extraFields>table>tbody>tr>td>#default-${j}`);
+            el2.on('click', ev => {
+                el.val(opt.defaultValue);
+                if (el.attr('type') == 'checkbox') el.prop('checked', opt.defaultValue);
+                localStorage.setItem(`currentExtraFields-${i}-${j}`, opt.defaultValue);
+                opt.onInput(this.chart, opt.defaultValue);
                 chart.show();
             });
         }
