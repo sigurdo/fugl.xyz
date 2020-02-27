@@ -107,7 +107,6 @@ class BirdDataGraph {
         let color = this.birdsPerSpeedColor;// ? this.birdsPerSpeedColor : '#000';
         let maxSpeed = Number(_.max(this.data, el => Number(el.speed)).speed);
         for (let i = 0; i < maxSpeed/resolution; i++) {
-            console.log(maxSpeed/resolution);
             speeds.push(0);
             speedsLabel.push((i*resolution).toFixed(1));
             speedsColor.push(color);
@@ -143,7 +142,6 @@ class BirdDataGraph {
                 return new Date(el.time).toLocaleDateString() == date.toLocaleDateString();
             });
             obsPerDay.push(obs.length);
-            console.log('obs:', obs, i);
             tempPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
                 this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
             humidityPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 

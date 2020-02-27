@@ -37,7 +37,9 @@ data = {
 	"db_password": "password",
 	"turbine_id": 1,
 	#"time": "2020-01-20 15:08:55", #hvis du vil spesifisere tidspunkt selv
-	"speed": 2.6
+	"speed": 2.6, #Fart i m/s
+	"temperature": 10, #Temperatur i grader celsius
+	"humidity": 20 #Relativ luftfuktighet i %
 }
 r = requests.post(url, data, allow_redirects=False)
 
@@ -50,7 +52,10 @@ print("response:", r.text)
 	Jeg synes personlig denne koden er ganske selvforklarende, så jeg har ikke tenkt å kommentere den ytterligere. Men for å sjekke at registreringen funker kan du se på <a href="../live"> live data </a>, som er en tabell over alle observasjoner siste 24h.
 
 	<h3> GET /api/observations </h3>
-	Returnerer en JSON-liste over alle observasjonene i databasen. Dette API-et blir brukt i <a href="../live"> live data </a>.
+	Returnerer en JSON-liste over alle observasjonene i databasen.
+
+	<h3> GET /api/turbines </h3>
+	Returnerer en JSON-liste over alle vindmøllene i databasen.
 	</div>
 </div>
 <div class="footer">

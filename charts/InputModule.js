@@ -4,8 +4,8 @@ const graphFormats = [{
     name: 'Observasjoner/time',
     extraFields: [{
         name: 'Farge',
-        type: 'text',
-        defaultValue: 'crimson',
+        type: 'color',
+        defaultValue: '#dc143c',//'crimson',
         onInput: (chart, newVal) => {
             chart.birdsPerHourColor = newVal;
         }
@@ -23,8 +23,8 @@ const graphFormats = [{
     name: 'Observasjoner/fart',
     extraFields: [{
         name: 'Farge',
-        type: 'text',
-        defaultValue: '#abcdef',
+        type: 'color',
+        defaultValue: '#64b5f6',
         onInput: (chart, newVal) => {
             chart.birdsPerSpeedColor = newVal;
         }
@@ -42,31 +42,52 @@ const graphFormats = [{
     name: 'Måned',
     extraFields: [{
         name: 'Farge',
-        type: 'text',
-        defaultValue: 'purple',
+        type: 'color',
+        defaultValue: '#8e24aa',
         onInput: (chart, newVal) => {
             chart.month.color = newVal;
         }
     }, {
         name: 'År',
         type: 'select',
-        defaultValue: 2020,
+        defaultValue: new Date().getFullYear(),
         onInput: (chart, newVal) => {
             chart.month.year = Number(newVal);
+            return true; // Dette betyr at input-skjemaet må refreshes etter input her
         },
         generateOptions: (chart, data, turbineData) => {
-            return [{value: 2020, name: 2020}];
+            let years = new Set();
+            for (let i = 0; i < data.length; i++) {
+                years.add(new Date(data[i].time).getFullYear());
+            }
+            years.add(new Date().getFullYear());
+            let res = [];
+            for (let item of years) {
+                res.push({ value: item, name: item });
+            }
+            return res;
         }
     }, {
         name: 'Måned',
         type: 'select',
-        defaultValue: 1,
+        defaultValue: new Date().getMonth(),
         onInput: (chart, newVal) => {
             chart.month.month = Number(newVal);
         },
         generateOptions: (chart, data, turbineData) => {
-            // IKKE HELT FERDIG HER
-            return [{value: 0, name: 'Januar'}, {value: 1, name: 'Februar'}];
+            let year = chart.month.year;
+            let months = new Set();
+            for (let i = 0; i < data.length; i++) {
+                if (new Date(data[i].time).getFullYear() != year) continue;
+                months.add(new Date(data[i].time).getMonth());
+            }
+            months.add(new Date().getMonth());
+            monthNames = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'];
+            let res = [];
+            for (let item of months) {
+                res.push({ value: item, name: monthNames[item] });
+            }
+            return res;
         }
     }, {
         name: 'Vis temperatur',
@@ -138,8 +159,8 @@ class InputModule {
         for (let j = 0; j < this.formats[i].extraFields.length; j++) {
             let opt = this.formats[i].extraFields[j];
             html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td>`;
-            if (opt.type == 'text' || opt.type == 'number' || opt.type == 'checkbox') {
-                html += `<input type="${opt.type}" id="${j}">`;
+            if (opt.type == 'text' || opt.type == 'number' || opt.type == 'checkbox' || opt.type == 'color') {
+                html += `<input type="${opt.type}" id="${j}" step="0.01">`;
             }
             else if (opt.type == 'select') {
                 html += `<select id="${j}">`;
@@ -161,7 +182,7 @@ class InputModule {
             el.on('input', ev => {
                 if (ev.target.type == 'checkbox') ev.target.value = ev.target.checked;
                 localStorage.setItem(`currentExtraFields-${i}-${j}`, ev.target.value);
-                opt.onInput(this.chart, el.attr('type') == 'checkbox' ? JSON.parse(ev.target.value) : ev.target.value);
+                if (opt.onInput(this.chart, el.attr('type') == 'checkbox' ? JSON.parse(ev.target.value) : ev.target.value)) this.applyGrafFormat();
                 chart.show();
             });
             let el2 = this.getjq(`#extraFields>table>tbody>tr>td>#default-${j}`);
@@ -169,7 +190,7 @@ class InputModule {
                 el.val(opt.defaultValue);
                 if (el.attr('type') == 'checkbox') el.prop('checked', opt.defaultValue);
                 localStorage.setItem(`currentExtraFields-${i}-${j}`, opt.defaultValue);
-                opt.onInput(this.chart, opt.defaultValue);
+                if (opt.onInput(this.chart, opt.defaultValue)) this.applyGrafFormat();
                 chart.show();
             });
         }

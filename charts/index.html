@@ -71,7 +71,7 @@
             let promises = [];
             promises[0] = new Promise((resolve, reject) => $.get('../api/observations/', (data, status) => {
                 let observations = JSON.parse(data);
-                observations.sort((a, b) => b.id - a.id);
+                observations.sort((a, b) => a.id - b.id);
                 chart.setData(observations);
                 inputModule.setData(observations);
                 resolve();
