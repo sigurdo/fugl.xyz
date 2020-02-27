@@ -19,11 +19,6 @@
             width: 100%;
         }
 
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
         .vannrett {
             display: flex;
             flex-direction: row;
@@ -37,7 +32,7 @@
 </head>
 <body>
 <div class="pagetitle">
-Oversikt over vindmoller
+    Statistikk fugl.xyz
 </div>
 <div class="row">
     <div class="column nav">
@@ -68,25 +63,30 @@ Oversikt over vindmoller
         for (let key in allData[0]) keys.push(key);
         let ctx = document.querySelector('#graf').getContext('2d');
         let chart = new BirdDataGraph(ctx, [], []);
-        chart.showBirdsPerTurbine();
         let inputModule = new InputModule('inputModul', chart);
     </script>
 
     <script type="text/javascript">
-        function fetch() {
-            $.get('../api/observations/', (data, status) => {
+        async function fetch() {
+            let promises = [];
+            promises[0] = new Promise((resolve, reject) => $.get('../api/observations/', (data, status) => {
                 let observations = JSON.parse(data);
-                observations.sort((a, b) => b.id - a.id);
+                observations.sort((a, b) => a.id - b.id);
                 chart.setData(observations);
-                chart.show();
-            });
-
-            $.get('../api/turbines/', (data, status) => {
+                inputModule.setData(observations);
+                resolve();
+            }));
+            promises[1] = new Promise((resolve, reject) => $.get('../api/turbines/', (data, status) => {
                 let turbines = JSON.parse(data);
                 turbines.sort((a, b) => a.id - b.id);
                 chart.setTurbineData(turbines);
-                chart.show();
-            });
+                inputModule.setTurbineData(turbines);
+                resolve();
+            }));
+
+            await Promise.all(promises);
+            chart.show();
+            inputModule.render();
         }
 
         fetch();
