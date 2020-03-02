@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$db_username = $_POST['db_username'];
 	$db_password = $_POST['db_password'];
 	$turbine_id = $_POST['turbine_id'];
-	$endtime = $_POST['endtime'] ? $_POST['endtime'] : date("Y-m-d H:i:s");
-	$starttime = $_POST['starttime'] ? $_POST['starttime'] : date("Y-m-d H:i:s", strtotime($endtime)-60);
+	$endtime = date("Y-m-d H:i:s", $_POST['endtime'] ? strtotime($_POST['endtime']) : time());
+	$starttime = date("Y-m-d H:i:s", $_POST['starttime'] ? strtotime($_POST['starttime']) : time() - 60);
 	$birdminutes = $_POST['birdminutes'] ? $_POST['birdminutes'] : 0;
 	$topspeed = $_POST['topspeed'] ? $_POST['topspeed'] : "NULL";
 	$temperature = $_POST['temperature'] ? $_POST['temperature'] : "NULL";
