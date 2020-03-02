@@ -1,3 +1,7 @@
+koble til database:
+	ssh sigurdht@login.stud.ntnu.no
+	mysql -A -h mysql.stud.ntnu.no -u sigurdht_fugl -p sigurdht_fugl
+
 Hvordan databasen vår skal se ut:
 
 observation:
@@ -6,17 +10,7 @@ observation:
 	time
 	speed
 	temperature
-	windDirection
-	windSpeed
-	windGust
 	humidity
-	pressure
-	cloudiness
-	fog
-	lowClouds
-	mediumClouds
-	highClouds
-	dewpointTemperature
 
 turbine:
 	id (primary key)
@@ -27,29 +21,25 @@ turbine:
 ##################################
 Med datatyper: (basicly SQL-syntax)
 
-observation:
-	id int,
-	turbine_id int,
-	time timestamp,
-	speed float,
-	temperature float,
-	windDirection float,
-	windSpeed float,
-	windGust float,
-	humidity float,
-	pressure float,
-	cloudiness float,
-	fog float,
-	lowClouds float,
-	mediumClouds float,
-	highClouds float,
-	dewpointTemperature float,
-	PRIMARY KEY (id),
-	FOREIGN KEY (turbine_id) REFERENCES turbine(id)
-
-turbine:
-	id int,
+CREATE TABLE turbine(
+	id int NOT NULL AUTO_INCREMENT,
 	name varchar(255),
 	latitude float,
 	longitude float,
 	PRIMARY KEY (id)
+);
+
+INSERT INTO turbine (name, latitude, longitude) VALUES  ("test_rye", 63.402999, 10.133585);
+
+CREATE TABLE observation(
+	id int NOT NULL AUTO_INCREMENT,
+	turbine_id int,
+	time timestamp,
+	speed float,
+	temperature float,
+	humidity float,
+	PRIMARY KEY (id),
+	FOREIGN KEY (turbine_id) REFERENCES turbine(id)
+);
+
+INSERT INTO observation (turbine_id, time, speed, temperature, humidity) VALUES (1, '2020-01-20 12:04:01', 2.3, 12.3, 42);
