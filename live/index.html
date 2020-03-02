@@ -37,7 +37,7 @@ Oversikt over vindmoller
 			$.get('../api/observations/', (data, status) => {
 				let observations = JSON.parse(data);
 				observations.sort((a, b) => b.id - a.id);
-				if (!showAll) observations = _.filter(observations, obs => new Date().getTime() - new Date(obs.time).getTime() < 86400000);
+				if (!showAll) observations = _.filter(observations, obs => new Date().getTime() - new Date(obs.endtime).getTime() < 86400000);
 				let html = '<tr>';
 				for (let key in observations[0]) {
 					html += `<th> ${key} </th>`;
