@@ -10,7 +10,7 @@ observation:
 	starttime
 	endtime
 	birdminutes
-	topspeed
+	speed
 	temperature
 	humidity
 
@@ -39,11 +39,11 @@ CREATE TABLE observation(
 	starttime timestamp DEFAULT '2020-03-01 00:00:00',
 	endtime timestamp DEFAULT CURRENT_TIMESTAMP,
 	birdminutes float,
-	topspeed float,
+	speed float,
 	temperature float,
 	humidity float,
 	PRIMARY KEY (id),
 	FOREIGN KEY (turbine_id) REFERENCES turbine(id)
 );
 
-INSERT INTO observation (turbine_id, starttime, endtime, birdminutes, topspeed, temperature, humidity) VALUES (1, '2020-03-02 10:15:03', '2020-03-02 10:16:03', 0.5, 2.3, 12.3, 42);
+INSERT INTO observation (turbine_id, starttime, endtime, birdminutes, speed, temperature, humidity) VALUES (1, '2020-03-02 10:15:03', '2020-03-02 10:16:03', 0.5, 2.3, 12.3, 42);

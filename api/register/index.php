@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$endtime = date("Y-m-d H:i:s", $_POST['endtime'] ? strtotime($_POST['endtime']) : time());
 	$starttime = date("Y-m-d H:i:s", $_POST['starttime'] ? strtotime($_POST['starttime']) : time() - 60);
 	$birdminutes = $_POST['birdminutes'] ? $_POST['birdminutes'] : 0;
-	$topspeed = $_POST['topspeed'] ? $_POST['topspeed'] : "NULL";
+	$speed = $_POST['speed'] ? $_POST['speed'] : "NULL";
 	$temperature = $_POST['temperature'] ? $_POST['temperature'] : "NULL";
 	$humidity = $_POST['humidity'] ? $_POST['humidity'] : "NULL";
 
-	$sql = "INSERT INTO observation (turbine_id, starttime, endtime, birdminutes, topspeed, temperature, humidity) VALUES ($turbine_id, '$starttime', '$endtime', $birdminutes, $topspeed, $temperature, $humidity)";
+	$sql = "INSERT INTO observation (turbine_id, starttime, endtime, birdminutes, speed, temperature, humidity) VALUES ($turbine_id, '$starttime', '$endtime', $birdminutes, $speed, $temperature, $humidity)";
 	echo "sql: $sql <br>";
 	echo "username: $db_username<br>";
 	echo "password: $db_password<br>";
