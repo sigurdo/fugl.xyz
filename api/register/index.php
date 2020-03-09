@@ -8,8 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		db_username: username,
 		db_password: password,
 		turbine_id: id,
-		time: "YYYY-MM-DD hh:mm:ss", (optional)
-		speed: speed
+		starttime: a time format supported by strtotime(),
+		endtime: a time format supported by strtotime(),
+		birdminutes: birdminutes,
+		speed: speed,
+		temperature: temperature,
+		humidity: humidity
 	}
 	*/
 	//$ = $_POST[''];
