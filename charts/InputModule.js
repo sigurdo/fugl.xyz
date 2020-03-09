@@ -1,7 +1,7 @@
 const graphFormats = [{
-    name: 'Observasjoner/turbin'
+    name: 'Fugleminutter/turbin'
 }, {
-    name: 'Observasjoner/time',
+    name: 'Fugleminutter/time',
     extraFields: [{
         name: 'Farge',
         type: 'color',
@@ -20,7 +20,7 @@ const graphFormats = [{
         }
     }]
 }, {
-    name: 'Observasjoner/fart',
+    name: 'Fugleminutter/fart',
     extraFields: [{
         name: 'Farge',
         type: 'color',
@@ -160,7 +160,7 @@ class InputModule {
             let opt = this.formats[i].extraFields[j];
             html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td>`;
             if (opt.type == 'text' || opt.type == 'number' || opt.type == 'checkbox' || opt.type == 'color') {
-                html += `<input type="${opt.type}" id="${j}" step="0.01">`;
+                html += `<input type="${opt.type}" id="${j}" step="0.1">`;
             }
             else if (opt.type == 'select') {
                 html += `<select id="${j}">`;

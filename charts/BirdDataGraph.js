@@ -44,7 +44,7 @@ class BirdDataGraph {
         this[this.graphFormatFuncs[this.currentFormatNr]]();
     }
     showBirdsPerTurbine() {
-        let label = 'Antall obsevasjoner pr vindmølle';
+        let label = 'Totalt antall fugleminutter pr vindmølle';
         let turbine_ids = [];
         let turbineNames = [];
         let turbine_obs = [];
@@ -56,7 +56,7 @@ class BirdDataGraph {
         let turbineColors = ['red', 'blue', 'yellow', 'green'];
         for (let i = 0; i < this.data.length; i++) {
             for (let j = 0; j < turbine_ids.length; j++) {
-                if (this.data[i].turbine_id == turbine_ids[j]) turbine_obs[j]++;
+                if (this.data[i].turbine_id == turbine_ids[j]) turbine_obs[j] += Number(this.data[i].birdminutes);
             }
         }
         this.datasets = [{
@@ -69,7 +69,7 @@ class BirdDataGraph {
         this.render();
     }
     showBirdsPerHour() {
-        let label = 'Antall observasjoner pr tidpunkt på døgnet';
+        let label = 'Totalt antall fugleminutter pr tidpunkt på døgnet';
         let hours = [];
         let hoursLabel = [];
         let hoursColor = [];
@@ -83,9 +83,9 @@ class BirdDataGraph {
         }
         this.labels = hoursLabel;
         for (let i = 0; i < this.data.length; i++) {
-            let date = new Date(this.data[i].time);
+            let date = new Date(this.data[i].endtime);
             let hour = date.getHours() + date.getMinutes()/60 + date.getSeconds()/3600;
-            hours[Math.floor(hour/resolution)]++;
+            hours[Math.floor(hour/resolution)] += Number(this.data[i].birdminutes);
             //console.log(new Date(this.data[i].time));
         }
         this.datasets = [{
@@ -98,7 +98,7 @@ class BirdDataGraph {
         this.render();
     }
     showBirdsPerSpeed() {
-        let label = 'Antall observasjoner for ulik fart';
+        let label = 'Totalt antall fugleminutter pr fart';
         let speeds = [];
         let speedsLabel = [];
         let speedsColor = [];
@@ -113,7 +113,7 @@ class BirdDataGraph {
         }
         this.labels = speedsLabel;
         for (let i = 0; i < this.data.length; i++) {
-            speeds[Math.floor(this.data[i].speed/resolution)]++;
+            speeds[Math.floor(this.data[i].speed/resolution)] += Number(this.data[i].birdminutes);
             //console.log(new Date(this.data[i].time));
         }
         this.datasets = [{
@@ -130,7 +130,7 @@ class BirdDataGraph {
     }
     showMonth() {
         let months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'];
-        let label = `Viser observasjoner for ${months[this.month.month]} ${this.month.year}`;
+        let label = `Viser fugleminutter pr dag for ${months[this.month.month]} ${this.month.year}`;
         let date = new Date(this.month.year, this.month.month);
         let obsPerDay = [];
         let tempPerDay = [];
@@ -139,9 +139,9 @@ class BirdDataGraph {
         let colors = [];
         for (let i = 0; date.getTime() < new Date(this.month.year, this.month.month+1).getTime(); i++) {
             let obs = _.filter(this.data, el => {
-                return new Date(el.time).toLocaleDateString() == date.toLocaleDateString();
+                return new Date(el.endtime).toLocaleDateString() == date.toLocaleDateString();
             });
-            obsPerDay.push(obs.length);
+            obsPerDay.push(obs.reduce((a, b) => a + Number(b.birdminutes), 0));
             tempPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
                 this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
             humidityPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 
