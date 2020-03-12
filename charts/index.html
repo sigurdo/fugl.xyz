@@ -58,9 +58,6 @@
 
     <script type="text/javascript">
         const api_base_url = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBcDP4kr8xeUYvYPwOWOkxMNwE50pa3LLk';
-        let allData = [];
-        let keys = [];
-        for (let key in allData[0]) keys.push(key);
         let ctx = document.querySelector('#graf').getContext('2d');
         let chart = new BirdDataGraph(ctx, [], []);
         let inputModule = new InputModule('inputModul', chart);
