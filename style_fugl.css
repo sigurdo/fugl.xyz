@@ -2,13 +2,25 @@
   box-sizing: border-box;
 }
 
+
 body {
   margin: 0;
-  background-image: url("wallpaper.jpg");
-  background-size: 1909px 1227px;
+  background-color: #000;
+  background-size: auto;
   font-family: Arial, Futura, sans-serif;
 }
-.button {border-radius: 10%;
+
+row {
+	height: 90%;
+	top: 10%;
+	bottom: 10%;
+	display: inline-block;
+	vertical-align: top;
+	z-index: 0;
+	position: absolute;
+}
+
+button {border-radius: 10%;
 		background-color: black;
 		padding: 15px 32px;
 		text-align: center;
@@ -16,73 +28,152 @@ body {
 		color: white;
 		display: inline-block;
 		font-size: 12px;
+		margin-left: 5%;
 }
 
+button:hover {
+	background-color: darkslategray;
+}
 
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+input[type="submit"] {
+	border-radius: 10%;
+	background-color: black;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 5%;
+}
+
+input[type="submit"]:hover {
+	background-color: darkslategray;
+}
+
+input[type="text"]:hover {
+	border: 1px solid black;
+}
 
 .pagetitle {
   background-color: #000;
-  color: white;
+  color: gainsboro;
   width: 100%;
-  padding: 80px;
-  height: 200px;
+  height: 10%;
+  padding: 5%;
   text-align: center;
-  font-size: 50px;
-  
+  font-size: 200%;
+  font-family: Arial, Futura, sans-serif;
+  z-index: 3;
+  position: fixed;
   }
+  
 .footer {
-  background-color: none;
-  color: white;
-  padding: 100px;
+  background-color: black;
+  color: gainsboro;
   text-align: center;
+  font-family: 'Pinyon Script';
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
   }
 
 .column {
   float: left;
-  height: 800px;
   overflow: auto;
+  height: 100%;
 }
 
 .column.nav {
   width: 20%;
+  top: 10%;
   background-color: #000;
-  /*position: fixed;*/
-  z-index: 1;
-  top: 20%;
-  left: 0;
-  overflow-x: hidden;
+  left: -19%;
+  transition: all .1s linear;
+  color: gainsboro;
+  height: 800px;
+  float: left;
+  position: fixed;
+  z-index: 2;
+  overflow: visible;
+}
+
+.column.nav:hover {
+  color: white;
+  opacity: 1;
+  transform: translate(95%,0%);
+}
+.column.nav:hover a {
+  display: block;
+  color: gainsboro;
 }
 
 /* Side navigation links */
 .column.nav a {
-  color: white;
-  padding: 16px;
+  position: relative;
+  top: 5%;
   background-color: black;
   text-decoration: none;
-  display: block;
+  display: none;
+  font-size: 100%;
+  padding: 5%;
 }
 
 /* Change color on hover */
 .column.nav a:hover {
   background-color: #ddd;
   color: black;
+  display: block;
 }
+
+/*markør for meny*/
+ul {
+    border: solid darkseagreen 20%;
+	padding: 5%;
+	color: black;
+    position: relative;
+    top: 5%;
+    left: 78%;
+	text-align: right;
+    margin-left: -250%;
+	background-color: darkseagreen;
+	opacity: 0.9;
+    }
 
 /* Style the content */
 .column.content {
-  background-color: #f1f1f1;
+  border-radius: 2%;
+  background-color: gainsboro;
   border-color: none;
-  border-width: 50px;
-  width: 50%;
+  border-width: 10%;
+  text-align: justify;
+  line-height: 150%;
+  width: 90%;
+  top:25%;
+  padding: 8%;
   overflow: auto;
+  position: absolute;
+  margin-left: 5%;
+  z-index: 1;
 }
 
-.column.pic {
-	background-image: url("windmill.jpg");
-	background-size: 400px 550px;
-	background-repeat: no-repeat;
-	width: 30%;
+/*pga chart*/
+.column.background {
+	background-color: black;
+	width: 5000px;
+	height: 5000px;
+	position: fixed;
+	z-index: -2;
 }
+
 
 .row:after {
   content: "";
@@ -90,9 +181,58 @@ body {
   clear: both;
 }
 
+table.center {
+	border: 2px solid black;
+	border-collapse: collapse;
+	width: 80%;
+	margin-left:5%;
+	margin-right: 15%;
+	background-color: silver;
+	
+}
 
+th {
+	border: 2px solid black;
+	border-collapse: collapse;
+	color: white;
+	background-color: black; 
+}
 
+tr {
+	text-align: center;
+}
 
+td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	color: black;
+}
+tr:hover {
+	background-color: gainsboro;
+}
+td:hover {
+	background-color: white;
+}
 
+ /*  
+        html, body {
+            margin: 0px;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+*/
+.vannrett {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#graf {
+        max-width: 150vh;
+}
 
 
