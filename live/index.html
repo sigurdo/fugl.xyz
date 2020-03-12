@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
 	<title> Live data fugl.xyz </title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
@@ -26,6 +27,8 @@ Oversikt over vindmoller
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 	<button class="button" id="showAll"> Vis alle </button>
 	<table id="data"></table>
+	<h2> Vindmøller: </h2>
+	<table id="turbines"></table>
 	<script type="text/javascript">
 		let showAll = false;
 		$('#showAll').on('click', () => {
@@ -54,7 +57,24 @@ Oversikt over vindmoller
 			});
 		}
 
+		function fetchTurbines() {
+			$.get('../api/turbines/', (data, status) => {
+				let turbines = JSON.parse(data);
+				turbines.sort((a, b) => a.id - b.id);
+				let html = '<tr>';
+				for (let key in turbines[0]) html += `<th> ${key} </th>`;
+				html += '</tr>';
+				for (var i = 0; i < turbines.length; i++) {
+					html += '<tr>';
+					for (let key in turbines[i]) html += `<td> ${turbines[i][key]} </td>`;
+					html += '</tr>';
+				}
+				$('#turbines').html(html);
+			});
+		}
+
 		fetch();
+		fetchTurbines();
 		setInterval(fetch, 1000);
 	</script>
 	</div>
