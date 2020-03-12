@@ -3,18 +3,20 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
 	<title>Teste /api/register </title>
 	<link rel="stylesheet" href="../../style_fugl.css">
 	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="pagetitle">
-	Manuell observasjon
-	<i class="fas fa-crow"></i>
+	Manuell observasjon <i class="fas fa-kiwi-bird"></i>
 </div>
 	<div class="row">
 	<div class="column nav">
+		<ul><i class="fas fa-arrow-alt-circle-left"></i>Meny</ul>
 		<a href="../../"><i class="fas fa-home"></i> Hjem </a>
 		<a href="../../live/"><i class="fas fa-table"></i> Live data </a>
 		<a href="../../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
@@ -22,15 +24,20 @@
 		<a href="../../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
 	</div>
 	<div class="column content">
+	På denne siden kan du sende inn observasjon av fugl i nærheten av vindmølle.
 	<form method="POST" action="./index.php">
-		<p> db_username: <input type="text" name="db_username" id="db_username"> </p>
-		<p> db_password: <input type="text" name="db_password" id="db_password"> </p>
-		<p>	turbine_id:	<input type="text" name="turbine_id" value="1">	</p>
-		<p>	time: <input type="text" name="time" value="0"> </p>
-		<p>	speed: <input type="text" name="speed" value="2.2">	</p>
-		<p>	temperature: <input type="text" name="temperature" value="12.3"> </p>
-		<p>	humidity: <input type="text" name="humidity" value="42"> </p>
-		<input type="submit" name="send" value="send" id="send">
+	<table class="center">
+		<th>Skriv inn din observasjon her</th><th></th>
+		<tr><td><p> db_username:</td> <td><input type="text" name="db_username" id="db_username"></td> </p></tr>
+		<tr><td><p> db_password:</td> <td><input type="text" name="db_password" id="db_password"></td> </p></tr>
+		<tr><td><p>	turbine_id:</td>	<td><input type="text" name="turbine_id" value="1"></td>	</p></tr>
+		<tr><td><p>	time:</td> <td><input type="text" name="time" value="0"></td> </p></tr>
+		<tr><td><p>	speed:</td> <td><input type="text" name="speed" value="2.2"></td>	</p></tr>
+		<tr><td><p>	temperature:</td> <td><input type="text" name="temperature" value="12.3"></td> </p></tr>
+		<tr><td><p>	humidity:</td> <td><input type="text" name="humidity" value="42"></td> </p></tr>
+		</table>
+		<input type="submit" name="send" value="Send inn skjema" id="send">
+	
 	</form>
 
 	<script type="text/javascript">//Husker på innlogginsdataen som ble skrevet sist
