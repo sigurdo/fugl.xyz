@@ -1,6 +1,7 @@
 #inputModul {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: left;
     font-size: 18px;
 }
