@@ -7,11 +7,11 @@
 	<link rel="stylesheet" href="../../style_fugl.css">
 	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="pagetitle">
-	Manuell observasjon
-	<i class="fas fa-crow"></i>
+	Manuell observasjon <i class="fas fa-kiwi-bird"></i>
 </div>
 	<div class="row">
 	<div class="column nav">
@@ -22,17 +22,21 @@
 		<a href="../../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
 	</div>
 	<div class="column content">
+	På denne siden kan du sende inn observasjon av fugl i nærheten av vindmølle.
 	<form method="POST" action="./index.php">
-		<p> db_username: <input type="text" name="db_username" id="db_username"> </p>
-		<p> db_password: <input type="text" name="db_password" id="db_password"> </p>
-		<p>	turbine_id:	<input type="text" name="turbine_id" value="1">	</p>
-		<p>	starttime: <input type="text" name="starttime" value="0"> </p>
-		<p>	endtime: <input type="text" name="endtime" value="0"> </p>
-		<p>	birdminutes: <input type="number" step="0.01" name="birdminutes" value="0.5"> </p>
-		<p>	speed: <input type="text" name="speed" value="2.2"> </p>
-		<p>	temperature: <input type="text" name="temperature" value="12.3"> </p>
-		<p>	humidity: <input type="text" name="humidity" value="42"> </p>
-		<input type="submit" name="send" value="send" id="send">
+	<table class="center">
+		<th colspan="2">Skriv inn din observasjon her</th>
+		<tr><td>db_username:</td> <td><input type="text" name="db_username" id="db_username"></td></tr>
+		<tr><td>db_password:</td> <td><input type="text" name="db_password" id="db_password"></td></tr>
+		<tr><td>turbine_id:</td> <td><input type="text" name="turbine_id" value="1"></td></tr>
+		<tr><td>starttime:</td><td><input type="text" name="starttime" value="0"></tr>
+		<tr><td>endtime:</td><td><input type="text" name="endtime" value="0"></tr>
+		<tr><td>birdminutes:</td><td><input type="number" step="0.01" name="birdminutes" value="0.5"></tr>
+		<tr><td>speed:</td><td><input type="text" name="speed" value="2.2"></td></tr>
+		<tr><td>temperature:</td><td><input type="text" name="temperature" value="12.3"></td></tr>
+		<tr><td>humidity:</td><td><input type="text" name="humidity" value="42"></td></tr>
+		</table>
+		<input type="submit" name="send" value="Send inn skjema" id="send">
 	</form>
 
 	<script type="text/javascript">//Husker på innlogginsdataen som ble skrevet sist

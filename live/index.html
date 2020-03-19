@@ -14,6 +14,7 @@
 <body>
 <div class="pagetitle">
 Oversikt over vindmoller
+<i class="fas fa-dragon"></i>
 </div>
 <div class="row">
 	<div class="column nav">
@@ -24,11 +25,12 @@ Oversikt over vindmoller
 		<a href="../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
 	</div>
 	<div class="column content">
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-	<button class="button" id="showAll"> Vis alle </button>
-	<table id="data"></table>
+	<h2>Live data </h2>
+	På denne siden kan du se data i sanntid fra vindmøller fra de siste 24 timene. Trykk på knappen for å se data.<br>
+	<button id="showAll"> Vis alle </button>
+	<table class="center" id="data"></table>
 	<h2> Vindmøller: </h2>
-	<table id="turbines"></table>
+	<table class="center" id="turbines"></table>
 	<script type="text/javascript">
 		let showAll = false;
 		$('#showAll').on('click', () => {
@@ -75,7 +77,7 @@ Oversikt over vindmoller
 
 		fetch();
 		fetchTurbines();
-		setInterval(fetch, 1000);
+		// setInterval(fetch, 1000);
 	</script>
 	</div>
 </div>

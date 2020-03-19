@@ -155,7 +155,7 @@ class InputModule {
             return;
         }
         let i = formatNr;
-        let html = '<table>';
+        let html = '<table class="center">';
         for (let j = 0; j < this.formats[i].extraFields.length; j++) {
             let opt = this.formats[i].extraFields[j];
             html += `<tr><td><label for="${j}">${opt.name}</label>:</td><td>`;
