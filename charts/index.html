@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
+    <title> Statistikk fugl.xyz </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="inputModule.css">
+	<link rel="stylesheet" href="../style_fugl.css">
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
+</head>
+
+<body>
+<div class="pagetitle">
+	Statistikk over fugleobservasjoner <i class="fas fa-crow"></i>
+</div>
+<div class="row">
+<span class='glyphicon glyphicon-home'></span> <span class="nav-label">
+	<div class="column nav">
+		<a href="../index.html"><i class="fas fa-home"></i> Hjem </a>
+		<a href="../live/index.html"><i class="fas fa-table"></i> Live data </a>
+		<a href="../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="./"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</div>
+	</span>
+	<div class="column content">
+    <div class="vannrett">
+        <canvas id="graf"></canvas>
+    </div>
+
+    <div id="inputModul"></div>
+
+    <div class="vannrett" style="margin-top: 24px;">
+        <iframe id="map" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBcDP4kr8xeUYvYPwOWOkxMNwE50pa3LLk&q=63.417901,10.402329" width="600" height="450" frameborder="0" style="border:0; display: none;" allowfullscreen=""></iframe>
+    </div>
+
+    <script type="text/javascript" src="BirdDataGraph.js"></script>
+    <script type="text/javascript" src="InputModule.js"></script>
+
+    <script type="text/javascript">
+        const api_base_url = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBcDP4kr8xeUYvYPwOWOkxMNwE50pa3LLk';
+        let allData = [];
+        let keys = [];
+        for (let key in allData[0]) keys.push(key);
+        let ctx = document.querySelector('#graf').getContext('2d');
+        let chart = new BirdDataGraph(ctx, [], []);
+        chart.showBirdsPerTurbine();
+        let inputModule = new InputModule('inputModul', chart);
+    </script>
+
+    <script type="text/javascript">
+        function fetch() {
+            $.get('../api/observations/', (data, status) => {
+                let observations = JSON.parse(data);
+                observations.sort((a, b) => b.id - a.id);
+                chart.setData(observations);
+                chart.show();
+            });
+
+            $.get('../api/turbines/', (data, status) => {
+                let turbines = JSON.parse(data);
+                turbines.sort((a, b) => a.id - b.id);
+                chart.setTurbineData(turbines);
+                chart.show();
+            });
+        }
+
+        fetch();
+
+        function renderMap(lat, long) {
+            if (lat != undefined && long != undefined)
+                $('#map').attr('src', `${api_base_url}&q=${lat},${long}&maptype=satellite`);
+            $('#map').attr('width', window.innerWidth);
+            $('#map').attr('height', window.innerHeight);
+            $('#map').show();
+        }
+
+        chart.chart.options.onClick = (e, data) => {
+            if (chart.currentFormatNr != 0) return;
+            var ctx = $("canvas")[0].getContext("2d");
+            var base = chart.chart.chartArea.bottom;
+            var height = chart.chart.chart.height;
+            var width = chart.chart.chart.scales['x-axis-0'].width;
+            var offset = $('canvas').offset().top - $(window).scrollTop();
+            if(e.pageY > base + offset){
+                var count = chart.chart.scales['x-axis-0'].ticks.length;
+                var padding_left = chart.chart.scales['x-axis-0'].paddingLeft;
+                var padding_right = chart.chart.scales['x-axis-0'].paddingRight;
+                var xwidth = (width-padding_left-padding_right)/count;
+                // don't call for padding areas
+                var bar_index = (e.offsetX - padding_left - chart.chart.scales['y-axis-0'].width) / xwidth;
+                if(bar_index > 0 & bar_index < count){
+                    bar_index = Math.floor(bar_index);
+                    let lat = chart.turbineData[bar_index].latitude;
+                    let long = chart.turbineData[bar_index].longitude;
+                    renderMap(lat, long);
+                }
+            }
+        }
+    </script>
+	</div>
+</div>
+
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
+</div>
+</body>
+</html>
