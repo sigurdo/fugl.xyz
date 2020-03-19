@@ -3,19 +3,50 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|IBM+Plex+Mono|Nanum+Gothic|Varela|Rubik|Ubuntu&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
 	<title> fugl.xyz - Home </title>
+	<link rel="stylesheet" href="style_fugl.css">
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
 </head>
 <body>
-	<h1> fugl.xyz - Et ELSYS innovasjonsprosjekt </h1>
 
-	<ul>
-		<li>
-			<a href="live"> Live data </a>
-		</li>
+<div class="pagetitle">
+	fugl.xyz - Et ELSYS innovasjonsprosjekt
+	<i class="fas fa-dove"></i>
+</div>
 
-		<li>
-			<a href="documentation"> Kode/dokumentasjon </a>
-		</li>
-	</ul>
+
+<div class="row">
+<div class="column nav">
+	<span class='glyphicon glyphicon-home'></span> <span class="nav-label">
+		<a href="./"><i class="fas fa-home"></i> Hjem </a>
+		<a href="live/"><i class="fas fa-table"></i> Live data </a>
+		<a href="api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="charts/"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</span>
+</div>
+
+
+<div class="column content">
+	<h1>Om prosjektet</h1>
+	<p>
+	Vindkraft er en av de viktigste alternativene våre for bærekraftig energi, og er dessuten en god 
+	løsning for avsidesliggende samfunn der det er ressurskrevende å legge kraftlinjer. 
+	Det finnes likevel problemer ved denne formen for kraftproduksjon. Fugledød er kanskje den mest omtalte
+	bekymringen. Mange områder som er aktuelle for vindkraftutbygging er også habitat for utrydningstruede fuglearter.
+	Til nå har kartlegging av fugleaktivitet i slike områder vært gjort av ornitologer, noe som er både dyrt og lite effektivt. 
+	Derfor har Trønderenergi gitt studenter ved Elektronisk systemdesign og innovasjon oppgaven å lage et system som automatiserer denne oppgaven. 
+	</p>
+	Vår løsning er basert på en doppler- radar som registrerer flyvende objekter i bevegelse fra eller mot radaren. 
+	Ved å analysere data fra radaren kan vi få en oversikt over hvor ofte fugler er i området og hvilke tider de oppholder seg der. Dataene blir sendt til dette nettstedet, sånn at de kan vurderes av fagpersonell.
+	
+</div>
+</div>
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
 </body>
 </html>

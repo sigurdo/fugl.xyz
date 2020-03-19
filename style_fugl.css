@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: black;
+  background-size: auto;
+  font-family: Arial, Futura, sans-serif;
+  min-height: 100%;
+}
+
+.pagetitle {
+  background-color: black;
+  color: gainsboro;
+  text-align: center;
+  font-size: 200%;
+  font-family: Arial, Futura, sans-serif;
+  padding: 3%;
+  }
+
+.row {
+	display: flex;
+	display: -webkit-flex;
+	background-color: black;
+	width: auto;
+	}
+	
+.column {
+	background-color: black;
+	border: none;
+}
+
+.column.nav {
+  width: 13%;
+  background-color: #000;
+  overflow-x: hidden;
+}
+
+/* Side navigation links */
+.column.nav a {
+  color: white;
+  padding: 13%;
+  background-color: black;
+  text-decoration: none;
+  font-size: 80%;
+  display: block;
+}
+
+
+.column.nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.column.content {
+  border-radius: 1%;
+  background-color: gainsboro;
+  border-color: none;
+  text-align: justify;
+  padding: 2%;
+  width: 80%;
+}
+
+.footer {
+  background-color: black;
+  color: gainsboro;
+  text-align: center;
+  font-family: 'Pinyon Script';
+  padding: 5%;
+  }
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+*/
+
+table.center {
+	border: 2px solid black;
+	border-collapse: collapse;
+	width: 80%;
+	margin-left:15%;
+	margin-right: 15%;
+	background-color: silver;
+	
+}
+
+th {
+	border: 2px solid black;
+	border-collapse: collapse;
+	color: white;
+	background-color: black; 
+}
+
+tr {
+	text-align: center;
+}
+
+td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	color: black;
+	padding: 2%;
+}
+tr:hover {
+	background-color: gainsboro;
+}
+td:hover {
+	background-color: white;
+}
+
+.vannrett {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#graf {
+        max-width: 150vh;
+}
+
+button {border-radius: 10%;
+		background-color: black;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		color: white;
+		display: inline-block;
+		font-size: 12px;
+		margin-left: 5%;
+}
+
+button:hover {
+	background-color: darkslategray;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+input[type="submit"] {
+	border-radius: 10%;
+	background-color: black;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	display: inline-block;
+	font-size: 80%;
+	margin-left: 5%;
+}
+
+
+input[type="submit"]:hover {
+	background-color: darkslategray;
+}
+
+input[type="text"]:hover {
+	border: 1px solid black;
+}
