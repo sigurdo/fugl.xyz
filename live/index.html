@@ -2,24 +2,35 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
 	<title> Live data fugl.xyz </title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-
-	<style type="text/css">
-		table, th, td {
-			border: 1px solid black;
-			border-collapse: collapse;
-		}
-	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../style_fugl.css"></link>
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
+	
 </head>
 <body>
-	<table id="data"></table>
-
+<div class="pagetitle">
+Oversikt over vindmoller
+<i class="fas fa-dragon"></i>
+</div>
+<div class="row">
+	<div class="column nav">
+		<a href="../"><i class="fas fa-home"></i> Hjem </a>
+		<a href="../live/"><i class="fas fa-table"></i> Live data </a>
+		<a href="../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="../charts/"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</div>
+	<div class="column content">
+	<h2>Live data </h2>
+	På denne siden kan du se data i sanntid fra vindmøller fra de siste 24 timene. Trykk på knappen for å se data.<br>
 	<button id="showAll"> Vis alle </button>
-
-	<a href="../api/register/test.html"> Manuell observasjon </a>
-
+	<table class="center" id="data"></table>
 	<script type="text/javascript">
 		let showAll = false;
 		$('#showAll').on('click', () => {
@@ -51,5 +62,10 @@
 		fetch();
 		setInterval(fetch, 1000);
 	</script>
+	</div>
+</div>
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
 </body>
 </html>
