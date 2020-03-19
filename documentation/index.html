@@ -2,13 +2,29 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title> fugl.xyz - Dokumentasjon </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
+	<title> fugl.xyz - Dokumentasjon</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="../style_fugl.css">
+	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
-	<h2> API dokumentasjon </h2>
+	<div class="pagetitle"> API dokumentasjon <i class="fas fa-feather-alt"></i></div>
+	
+<div class="row">
+	<div class="column nav">
+		<a href="../"><i class="fas fa-home"></i> Hjem </a>
+		<a href="../live/"><i class="fas fa-table"></i> Live data </a>
+		<a href="../api/register/test.html"><i class="fas fa-eye"></i> Manuell observasjon </a>
+		<a href="../charts/"><i class="fas fa-chart-bar"></i> Statistikk </a>
+		<a href="../documentation/"> <i class="fas fa-file-alt"></i> Kode/dokumentasjon </a>
+	</div>
+	<div class="column content">
 	<h3> POST /api/register </h3>
 
 	POST /api/register apiet brukes til å registrere en ny observasjon i databasen. Vi viser hvordan det brukes med et eksempel i python:
@@ -32,10 +48,16 @@ print("response:", r.text)
 #response: sql: INSERT INTO observation (turbine_id, time, speed) VALUES (1, '2020-01-20 03:04:32', 2.6) <<!---->br>username: pi<<!---->br>password: password<<!---->br>Spørringen gikk vellykket<<!---->br>
 
 	</code>
-</pre>
+	</pre>
 	Jeg synes personlig denne koden er ganske selvforklarende, så jeg har ikke tenkt å kommentere den ytterligere. Men for å sjekke at registreringen funker kan du se på <a href="../live"> live data </a>, som er en tabell over alle observasjoner siste 24h.
 
 	<h3> GET /api/observations </h3>
 	Returnerer en JSON-liste over alle observasjonene i databasen. Dette API-et blir brukt i <a href="../live"> live data </a>.
+	</div>
+</div>
+<div class="footer">
+	Laget av gruppe 8 <i class="fas fa-heart"></i>
+</div>
+
 </body>
 </html>
