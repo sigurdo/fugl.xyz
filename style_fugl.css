@@ -75,14 +75,11 @@ body {
   display: table;
   clear: both;
 }
-*/
 
 table.center {
 	border: 2px solid black;
+  width: 100%;
 	border-collapse: collapse;
-	width: 80%;
-	margin-left:15%;
-	margin-right: 15%;
 	background-color: silver;
 	
 }
@@ -92,6 +89,7 @@ th {
 	border-collapse: collapse;
 	color: white;
 	background-color: black; 
+	padding: 2%;
 }
 
 tr {
@@ -102,7 +100,7 @@ td {
 	border: 1px solid black;
 	border-collapse: collapse;
 	color: black;
-	padding: 2%;
+  padding: 2%;
 }
 tr:hover {
 	background-color: gainsboro;
@@ -162,4 +160,8 @@ input[type="submit"]:hover {
 
 input[type="text"]:hover {
 	border: 1px solid black;
+}
+
+input[type="text"] {
+  width: 100px;
 }
