@@ -104,6 +104,39 @@ const graphFormats = [{
             chart.month.humidity = newVal;
         }
     }]
+}, {
+    name: 'Siste 24h',
+    extraFields: [{
+        name: 'Farge',
+        type: 'color',
+        defaultValue: '#039be5',
+        onInput: (chart, newVal) => {
+            chart.day.color = newVal;
+        }
+    }, {
+        name: 'Oppløsning',
+        type: 'number',
+        defaultValue: 1,
+        onInput: (chart, newVal) => {
+            newVal = Number(newVal);
+            if (!newVal) return;// newVal = graphFormats[2].extraFields[1].defaultValue;
+            chart.day.resolution = newVal;
+        }
+    }, {
+        name: 'Vis temperatur',
+        type: 'checkbox',
+        defaultValue: true,
+        onInput: (chart, newVal) => {
+            chart.day.temp = newVal;
+        }
+    }, {
+        name: 'Vis fuktighet',
+        type: 'checkbox',
+        defaultValue: true,
+        onInput: (chart, newVal) => {
+            chart.day.humidity = newVal;
+        }
+    }]
 }];
 
 class InputModule {

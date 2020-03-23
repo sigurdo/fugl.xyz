@@ -1,6 +1,6 @@
 class BirdDataGraph {
     constructor(ctx, data, turbineData) {
-        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour', 'showBirdsPerSpeed', 'showMonth'];
+        this.graphFormatFuncs = ['showBirdsPerTurbine', 'showBirdsPerHour', 'showBirdsPerSpeed', 'showMonth', 'showLastDay'];
         this.currentFormatNr = 0;
         this.ctx = ctx;
         this.data = data;
@@ -26,6 +26,7 @@ class BirdDataGraph {
             }
         });
         this.month = {};
+        this.day = {};
         // this.render
     }
     render() {
@@ -165,6 +166,61 @@ class BirdDataGraph {
         if (this.month.humidity) this.datasets.push({
             label: 'Luftfiktighet[%]',
             data: humidityPerDay,
+            borderColor: 'blue',
+            type: 'line'
+        });
+        this.render();
+    }
+    showLastDay() {
+        let label = `Viser fugleminutter siste 24 timer`;
+        const starttime = new Date().getTime() - 24 * 3600 * 1000;
+        let date = new Date(starttime);
+        let resolution = this.day.resolution;
+        let obsPerHour = [];
+        let tempPerHour = [];
+        let humidityPerHour = [];
+        let hours = [];
+        let colors = [];
+        for (let i = 0; date.getTime() < new Date().getTime() - 1000; i++) {
+            let obs = _.filter(this.data, el => {
+                return new Date(el.endtime).getTime() > new Date((i    ) * resolution * 3600 * 1000 + starttime).getTime() &&
+                       new Date(el.endtime).getTime() < new Date((i + 1) * resolution * 3600 * 1000 + starttime).getTime();
+            });
+            obsPerHour.push(obs.reduce((a, b) => a + Number(b.birdminutes), 0));
+            tempPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
+                this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
+            humidityPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 
+                this.data.reduce((a, b) => a + Number(b.humidity), 0)/this.data.length);
+            const toHour = (i, resolution) => {
+                let endtime = (new Date(starttime).getTime())/(3600 * 1000) + (i+1) * resolution;
+                endtime %= 24;
+                let hours = Math.floor(endtime);
+                if (hours < 10) hours = `0${hours}`;
+                let minutes = ((endtime - hours) * 60).toFixed(0);
+                if (minutes < 10) minutes = `0${minutes}`;
+                return `${hours}.${minutes}`;
+            }
+            hours.push(toHour(i, resolution));
+            colors.push(this.day.color);
+            date = new Date(date.getTime()+ resolution * 3600 * 1000);
+        }
+        this.labels = hours;
+        this.datasets = [{
+            label,
+            barPercentage: 1,
+            categoryPercentage: 1,
+            data: obsPerHour,
+            backgroundColor: colors
+        }];
+        if (this.day.temp) this.datasets.push({
+            label: 'Temperatur[°C]',
+            data: tempPerHour,
+            borderColor: 'orange',
+            type: 'line'
+        });
+        if (this.day.humidity) this.datasets.push({
+            label: 'Luftfiktighet[%]',
+            data: humidityPerHour,
             borderColor: 'blue',
             type: 'line'
         });
