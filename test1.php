@@ -1,6 +1,6 @@
 <?php
 //HTTPS redirect
-if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
+/*if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
 	header('Location: '."https://folk.ntnu.no/sigurdht/fugl.xyz/test1.php");
 }
 
@@ -15,5 +15,5 @@ else {
 	while ($row = $result->fetch_assoc()) {
 		printf("Data: %s<br>", $row["data"]);
 	}
-}
+}*/
 ?>

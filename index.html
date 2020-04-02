@@ -5,8 +5,29 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<title> fugl.xyz - Home </title>
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="pwa/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="pwa/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="pwa/favicon-16x16.png">
+<link rel="manifest" href="pwa/site.webmanifest">
+<link rel="mask-icon" href="pwa/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="apple-mobile-web-app-title" content="fugl.xyz">
+<meta name="application-name" content="fugl.xyz">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
 	<link rel="stylesheet" href="style_fugl.css">
 	<script src="https://kit.fontawesome.com/a069fd15f6.js"></script>
+	<script type="text/javascript">
+		if ('serviceWorker' in navigator) {
+			// window.addEventListener('load', function() {
+				navigator.serviceWorker.register('sw.js');
+			// });
+		}
+	</script>
+
 </head>
 <body>
 
