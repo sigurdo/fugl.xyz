@@ -1,7 +1,8 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
-workbox.routing.registerRoute(new RegExp('api/'), new workbox.strategies.NetworkFirst());
+workbox.routing.registerRoute(new RegExp('api/observations/'), new workbox.strategies.NetworkFirst());
+workbox.routing.registerRoute(new RegExp('api/turbines/'), new workbox.strategies.NetworkFirst());
 workbox.precaching.precacheAndRoute([{
     url: 'https://fonts.googleapis.com/icon?family=Material+Icons'
 }, {
