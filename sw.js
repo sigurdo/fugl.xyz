@@ -1,2 +1,106 @@
-if(!self.define){const e=e=>{"require"!==e&&(e+=".js");let r=Promise.resolve();return i[e]||(r=new Promise(async r=>{if("document"in self){const i=document.createElement("script");i.src=e,document.head.appendChild(i),i.onload=r}else importScripts(e),r()})),r.then(()=>{if(!i[e])throw new Error(`Module ${e} didn’t register its module`);return i[e]})},r=(r,i)=>{Promise.all(r.map(e)).then(e=>i(1===e.length?e[0]:e))},i={require:Promise.resolve(r)};self.define=(r,s,c)=>{i[r]||(i[r]=Promise.resolve().then(()=>{let i={};const d={uri:location.origin+r.slice(1)};return Promise.all(s.map(r=>{switch(r){case"exports":return i;case"module":return d;default:return e(r)}})).then(e=>{const r=c(...e);return i.default||(i.default=r),i})}))}}define("./sw.js",["./workbox-bb3da388"],(function(e){"use strict";self.addEventListener("message",e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()}),e.precacheAndRoute([{url:"api/observations/",revision:"faae041e83544536e9dd38dae4bf63c8"},{url:"api/register/",revision:"488966ae6e06a4865a386b4df625a788"},{url:"api/register/test.html",revision:"6c28b7b2e6ff45556b37101e8c5596d3"},{url:"api/turbines/",revision:"4e40d89df3582c72b7ba2a3c603cecc9"},{url:"bird_windmill.jpeg",revision:"b2d1712f9581c57c68ceb2cd43084f06"},{url:"bluesky.jpg",revision:"e1e1e790020161836152b34dcf45f17e"},{url:"charts/BirdDataGraph.js",revision:"a780820b7a7a15b40fa1d1587bc6db05"},{url:"charts/index.html",revision:"6bbbebd72f03642da3f612ddefc739df"},{url:"charts/inputModule.css",revision:"0a0fd77a75077caad7ebc84964ae5ddf"},{url:"charts/InputModule.js",revision:"ff19d4d8c7ed983b3041dee55b4fa9b2"},{url:"documentation/index.html",revision:"8fcf08f6b16396d3712ef4434f61c333"},{url:"index.html",revision:"2f0d4816f7ea57e6f4753aec45ecbee9"},{url:"live/index.html",revision:"f7c1570c2eb434b5f956fbc33151bd77"},{url:"style_fugl.css",revision:"d250bf6c63880aeeb9258cdc91e01f8e"},{url:"test1.php",revision:"b428906336cc6a23089e3bb7c8722552"},{url:"wallpaper-edit.jpg",revision:"124bb17d28ab2122429973fc2b3d26b2"},{url:"wallpaper.jpg",revision:"a280ec0db77419ee9f580d7805d4a2dc"},{url:"windmill.jpg",revision:"f6be663845c09b36bf661ccc5c48a850"}],{})}));
-//# sourceMappingURL=sw.js.map
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute([{"revision":"faae041e83544536e9dd38dae4bf63c8","url":"api/observations/index.php"},{"revision":"488966ae6e06a4865a386b4df625a788","url":"api/register/index.php"},{"revision":"28b3140080213ab293c582b574bdf1fc","url":"api/register/test.html"},{"revision":"4e40d89df3582c72b7ba2a3c603cecc9","url":"api/turbines/index.php"},{"revision":"b2d1712f9581c57c68ceb2cd43084f06","url":"bird_windmill.jpeg"},{"revision":"e1e1e790020161836152b34dcf45f17e","url":"bluesky.jpg"},{"revision":"a780820b7a7a15b40fa1d1587bc6db05","url":"charts/BirdDataGraph.js"},{"revision":"c93aae343ff03cfd43524dc129dac3c5","url":"charts/index.html"},{"revision":"0a0fd77a75077caad7ebc84964ae5ddf","url":"charts/inputModule.css"},{"revision":"ff19d4d8c7ed983b3041dee55b4fa9b2","url":"charts/InputModule.js"},{"revision":"5618363e16be0a178e9940ce4b059a96","url":"documentation/index.html"},{"revision":"c25ab7fe66fb8c24a096ffea0d1ebdd5","url":"index.html"},{"revision":"2126c5340d211d7adddd8723113d046b","url":"live/index.html"},{"revision":"3b91e4661d03f03717bdf185ccc63927","url":"pwa/html_code.html"},{"revision":"d250bf6c63880aeeb9258cdc91e01f8e","url":"style_fugl.css"},{"revision":"45f161a3c88266e64580866fa937bbac","url":"test1.php"},{"revision":"124bb17d28ab2122429973fc2b3d26b2","url":"wallpaper-edit.jpg"},{"revision":"a280ec0db77419ee9f580d7805d4a2dc","url":"wallpaper.jpg"},{"revision":"f6be663845c09b36bf661ccc5c48a850","url":"windmill.jpg"},{"revision":"e212f0dcac594402053f8a0221a706e6","url":"workbox-bb3da388.js"},{"revision":"69e8c22e65d143df551bfbf813fe726f","url":"workbox-config.js"},{"revision":"5a5b4c63a948dcdd55775d8805c699db","url":"pwa/android-chrome-192x192.png"},{"revision":"789ba583db3e8af0c57bcdc4098d563a","url":"pwa/android-chrome-512x512.png"},{"revision":"29711986d03ddc6240ef8c1cf7a1696d","url":"pwa/apple-touch-icon.png"},{"revision":"a493ba0aa0b8ec8068d786d7248bb92c","url":"pwa/browserconfig.xml"},{"revision":"04b0067f077696339e626f113debfe61","url":"pwa/favicon-16x16.png"},{"revision":"6e7439fa3e5d60290659e8b44c9cc587","url":"pwa/favicon-32x32.png"},{"revision":"02c51179b0528803521ca21063a101b3","url":"pwa/favicon.ico"},{"revision":"9f40eceba6a0043a611b5e5ffa307377","url":"pwa/mstile-150x150.png"},{"revision":"e26060a198cd0c618956164593fa712f","url":"pwa/README.md"},{"revision":"9c075bddcf5155adf30afd646b1de6a3","url":"pwa/safari-pinned-tab.svg"},{"revision":"61a9d1b454a86fe9db90e3cfdb8c8e2b","url":"pwa/site.webmanifest"}]);
+workbox.routing.registerRoute(new RegExp('api/'), new workbox.strategies.NetworkFirst());
+// http://localhost/fugl.xyz/api/observations/
+workbox.precaching.precacheAndRoute([{
+    url: 'https://fonts.googleapis.com/icon?family=Material+Icons'
+}, {
+    url: 'https://kit.fontawesome.com/a069fd15f6.js'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/css/free.min.css'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/webfonts/free-fa-solid-900.woff2'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/webfonts/free-fa-solid-900.woff'
+}, {
+    url: 'https://kit-free.fontawesome.com/releases/latest/webfonts/free-fa-solid-900.ttf'
+}, {
+    url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js'
+}, {
+    url: 'https://fonts.googleapis.com/css?family=Barlow|Comfortaa|Krona+One|Nanum+Gothic|Odibee+Sans|Rubik|Ubuntu&display=swap'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js'
+}, {
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-python.min.js'
+}/*, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}, {
+    url: ''
+}*/]);

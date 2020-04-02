@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<title> fugl.xyz - Dokumentasjon </title>
 
-	
+
 <link rel="apple-touch-icon" sizes="180x180" href="../pwa/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../pwa/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../pwa/favicon-16x16.png">
@@ -16,6 +16,13 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
+<script type="text/javascript">
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', function() {
+			navigator.serviceWorker.register('../sw.js');
+		});
+	}
+</script>
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../style_fugl.css">
