@@ -143,10 +143,8 @@ class BirdDataGraph {
                 return new Date(el.endtime).toLocaleDateString() == date.toLocaleDateString();
             });
             obsPerDay.push(obs.reduce((a, b) => a + Number(b.birdminutes), 0));
-            tempPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
-                this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
-            humidityPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 
-                this.data.reduce((a, b) => a + Number(b.humidity), 0)/this.data.length);
+            tempPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length : undefined);
+            humidityPerDay.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : undefined);
             days.push(i+1);
             colors.push(this.month.color);
             date = new Date(date.getTime()+24*3600*1000);
@@ -187,10 +185,8 @@ class BirdDataGraph {
                        new Date(el.endtime).getTime() < new Date((i + 1) * resolution * 3600 * 1000 + starttime).getTime();
             });
             obsPerHour.push(obs.reduce((a, b) => a + Number(b.birdminutes), 0));
-            tempPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length :
-                this.data.reduce((a, b) => a + Number(b.temperature), 0)/this.data.length);
-            humidityPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : 
-                this.data.reduce((a, b) => a + Number(b.humidity), 0)/this.data.length);
+            tempPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.temperature), 0)/obs.length : undefined);
+            humidityPerHour.push(obs.length ? obs.reduce((a, b) => a+Number(b.humidity), 0)/obs.length : undefined);
             const toHour = (i, resolution) => {
                 let endtime = (new Date(starttime).getTime())/(3600 * 1000) + (i+1) * resolution;
                 endtime %= 24;
